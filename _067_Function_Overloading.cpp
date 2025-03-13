@@ -13,6 +13,10 @@ class Employee{
     void name(string a, string b){
         cout << "hello " << a << " " << b << endl;
     }
+    // string name(string a, string b){
+    //     // cout << "hello " << a << " " << b << endl;
+    //     return "hello";
+    // }
 };
 
 int main(){
@@ -21,6 +25,7 @@ int main(){
     emp.name();
     emp.name("shashi");
     emp.name("shashi","vineeta");
+    // cout<<emp.name("shashi","vineeta");
     
     return 0;
 }
