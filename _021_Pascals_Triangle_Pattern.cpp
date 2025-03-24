@@ -14,7 +14,7 @@ int main(){
     return 0;
 }
 
-// formula for elements of the triangle of one row :-> (i-i) / j 
+// formula for elements of the triangle of one row :-> (i-j) / j 
 // also see the initial value of ---> i and j <---and see the derivation in future 
 
 // 1 

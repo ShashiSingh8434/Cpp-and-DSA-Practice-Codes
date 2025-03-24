@@ -12,7 +12,7 @@ int main(){
         for (int j = 0; j < i+1 ; j++){       // printing first half number 
             cout<<j+1<<" ";
         }
-        for (int k = i; k > 0 ; k--){       // printing first half number 
+        for (int k = i; k > 0 ; k--){       // printing second half number 
             cout<<k<<" ";
         }
         cout<<endl;
