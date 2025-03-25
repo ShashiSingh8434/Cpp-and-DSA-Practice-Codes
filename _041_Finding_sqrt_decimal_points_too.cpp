@@ -1,8 +1,6 @@
 #include <iostream>
 using namespace std;
 
-// in this i am finding only the integer part of the square root
-
 float findSqrt(int n,int p){
     int s = 0;
     int e = n;

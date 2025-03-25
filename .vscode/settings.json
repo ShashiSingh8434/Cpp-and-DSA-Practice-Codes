@@ -62,6 +62,7 @@
     "vector": "cpp",
     "memory": "cpp",
     "system_error": "cpp",
-    "istream": "cpp"
+    "istream": "cpp",
+    "new": "cpp"
   }
 }

@@ -1,13 +1,15 @@
 #include <iostream>
 using namespace std;
 /*
-
-BASE      |               DERIVED
-          |  public     | protected    |  private
 ---------------------------------------------------
-public    |  public    |  protected    |  private
-protected |  protected |  protected    |  private
-private   |  NaN       |  NaN          |  NaN
+BASE      |               DERIVED                  |
+---------------------------------------------------
+          |  public     | protected    |  private  |
+---------------------------------------------------|
+public    |  public    |  protected    |  private  |
+protected |  protected |  protected    |  private  |
+private   |  NaN       |  NaN          |  NaN      |
+---------------------------------------------------
 
 */
 
