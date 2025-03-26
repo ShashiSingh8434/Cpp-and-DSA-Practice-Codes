@@ -1,6 +1,29 @@
 #include <iostream>
 using namespace std;
 
+class Lol{
+    private:
+
+    int x;
+    mutable int y; // if we want the variable to change even inside const func we use mutable keyword
+
+    public:
+
+    int getx() const{   // const function
+        // x = 12;  gives error
+        return x;
+    }
+
+    int gety() const{
+        y = 10;
+        return y;
+    }
+};
+
+void display(const Lol &lol){
+    // this function can only call const function since the argument is taken as const
+}
+
 int main(){
 // @ Const DATA---------------------------------------------------------
 
@@ -34,6 +57,6 @@ int main(){
      
     int _d = 444;
     // d = &_d; cannot do 
-    
+
     return 0;
 }
