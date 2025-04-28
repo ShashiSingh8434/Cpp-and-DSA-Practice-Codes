@@ -5,7 +5,7 @@ class Employee{
     public:
     int a;
 
-    void operator<<(Employee& x){
+    void operator << (Employee& x){
         int p = this->a;
         int q = x.a;
 
