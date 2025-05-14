@@ -12,32 +12,41 @@ public:
         data = val;
         left = right = nullptr;
     }
-
+    
     void relationSet(Node* x, Node* y) {
         left = x;
         right = y;
     }
 
-    
-    void preorder(Node* root) {
-        if (!root) return;
-        cout << root->data << " ";
-        preorder(root->left);
-        preorder(root->right);
+    int height(Node* root) {
+        if (!root) return 0;
+        return 1 + max(height(root->left), height(root->right));
     }
 
-    void postorder(Node* root) {
+    void levelOrder(Node* root) {
         if (!root) return;
-        postorder(root->left);
-        postorder(root->right);
-        cout << root->data << " ";
+
+        queue<Node*> q;
+        q.push(root);
+
+        while (!q.empty()) {
+            Node* curr = q.front(); q.pop();
+            cout << curr->data << " ";
+            if (curr->left) q.push(curr->left);
+            if (curr->right) q.push(curr->right);
+        }
     }
 
-    void inorder(Node* root) {
-        if (!root) return;
-        inorder(root->left);
-        cout << root->data << " ";
-        inorder(root->right);
+    int convertIntoSumTree(Node* root){  // return the root final after conversion
+        if(!root) 
+            return 0;
+        
+        int left = convertIntoSumTree(root->left);
+        int right = convertIntoSumTree(root->right);
+
+        root->data = root->data + left + right;
+
+        return root->data;        
     }
 
 };
@@ -63,18 +72,16 @@ int main(){
     e->relationSet(i,j);
 /*
 
-        1
+           1
      2             3
   4     5        6    7
 8  9          10  11
 
 */
-    root->preorder(root);   // DFS 
-    cout<<endl;
-    // root->postorder(root);   
-    cout<<endl;
-    root->inorder(root);   
+    int final = root->convertIntoSumTree(root);
+    cout<<final<<endl;
 
-    
+    root->levelOrder(root);
+
     return 0;
 }

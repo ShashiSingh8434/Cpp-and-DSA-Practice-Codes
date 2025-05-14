@@ -1,5 +1,4 @@
 #include <iostream>
-#include <queue>
 using namespace std;
 
 class Node {
@@ -12,32 +11,37 @@ public:
         data = val;
         left = right = nullptr;
     }
-
+    
     void relationSet(Node* x, Node* y) {
         left = x;
         right = y;
     }
 
-    
-    void preorder(Node* root) {
-        if (!root) return;
-        cout << root->data << " ";
-        preorder(root->left);
-        preorder(root->right);
+    int height(Node* root) {
+        if (!root) return 0;
+        return 1 + max(height(root->left), height(root->right));
     }
 
-    void postorder(Node* root) {
-        if (!root) return;
-        postorder(root->left);
-        postorder(root->right);
-        cout << root->data << " ";
-    }
+    bool isBalanced(Node* root){
+        if(!root){
+            return true;
+        }
 
-    void inorder(Node* root) {
-        if (!root) return;
-        inorder(root->left);
-        cout << root->data << " ";
-        inorder(root->right);
+        int leftHeight = height(root->left);
+        int rightHeight = height(root->right);
+        int diff = abs(leftHeight - rightHeight);
+
+        bool ans1 = (diff <= 1);
+
+        bool leftans = isBalanced(root->left);
+        bool rightans = isBalanced(root->right);
+
+        if(ans1 && leftans && rightans){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 };
@@ -63,18 +67,12 @@ int main(){
     e->relationSet(i,j);
 /*
 
-        1
+           1
      2             3
   4     5        6    7
 8  9          10  11
 
 */
-    root->preorder(root);   // DFS 
-    cout<<endl;
-    // root->postorder(root);   
-    cout<<endl;
-    root->inorder(root);   
 
-    
     return 0;
 }
