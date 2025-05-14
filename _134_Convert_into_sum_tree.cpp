@@ -72,10 +72,13 @@ int main(){
     e->relationSet(i,j);
 /*
 
-           1
-     2             3
-  4     5        6    7
-8  9          10  11
+         1
+       /   \
+     2      3
+    / \    / \
+   4   5  6   7
+  / \    / \
+ 8   9  10  11
 
 */
     int final = root->convertIntoSumTree(root);

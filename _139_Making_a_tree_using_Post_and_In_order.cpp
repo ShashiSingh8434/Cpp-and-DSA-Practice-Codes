@@ -65,20 +65,21 @@ int findPosition(int arr[], int size, int element){
     return -1;
 }
 
-// important : here pass the preIndex by reference
+// important : here pass the postIndex by reference
 
-Node* makeATree(int preorder[], int inorder[], int size, int &preIndex, int inorderStart, int inorderEnd){
+Node* makeATree(int postorder[], int inorder[], int size, int &postIndex, int inorderStart, int inorderEnd){
 
-    if(preIndex >= size || inorderStart > inorderEnd){
+    if(postIndex < 0 || inorderStart > inorderEnd){
         return NULL;
     }
     
-    int element = preorder[preIndex++];
+    int element = postorder[postIndex--];
     Node* root = new Node(element);
     int pos = findPosition(inorder, size, element);
 
-    root->left = makeATree(preorder, inorder, size, preIndex, inorderStart, pos-1);
-    root->right = makeATree(preorder, inorder, size, preIndex, pos+1, inorderEnd);
+    root->right = makeATree(postorder, inorder, size, postIndex, pos+1, inorderEnd);
+    root->left = makeATree(postorder, inorder, size, postIndex, inorderStart, pos-1);
+    
 
     return root;
 }
@@ -113,19 +114,19 @@ int main(){
  8   9  10  11
 
 */
-    root->preorder(root);   // DFS 
+    // root->preorder(root);   // DFS 
     cout<<endl;
     root->postorder(root);   
     cout<<endl;
     root->inorder(root);   
 
-    int preor[] = {1, 2, 4, 8, 9, 5, 3, 6, 10, 11, 7};
+    int postor[] = {8, 9, 4, 5, 2, 10, 11, 6, 7, 3, 1};
     int inord[] = {8, 4, 9, 2, 5, 1, 10, 6, 11, 3, 7};
-    int size = sizeof(preor)/sizeof(int);
+    int size = sizeof(postor)/sizeof(int);
 
-    int preIndex = 0;
+    int postIndex = size-1;
 
-    Node* alpha = makeATree(preor, inord, size, preIndex, 0 , size-1);
+    Node* alpha = makeATree(postor, inord, size, postIndex, 0, size-1);
 
     cout<<endl;
     alpha->levelOrder(alpha);

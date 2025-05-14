@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class Node {
@@ -18,6 +19,27 @@ public:
     }
 };
 
+void printLeftView(Node* root, vector<int> &ans, int level){
+    if(!root) return;
+
+    if(level == ans.size()){
+        ans.push_back(root->data);
+    }
+
+    printLeftView(root->left, ans, level+1);
+    printLeftView(root->right, ans, level+1);
+}
+
+void printRightView(Node* root, vector<int> &ans, int level){
+    if(!root) return;
+
+    if(level == ans.size()){
+        ans.push_back(root->data);
+    }
+
+    printRightView(root->right, ans, level+1);
+    printRightView(root->left, ans, level+1);
+}
 
 int main(){
     Node* root = new Node(1);
@@ -49,5 +71,13 @@ int main(){
  8   9  10  11
  
 */
+
+    vector<int> ans;
+    int level = 0;
+    printRightView(root, ans, level);
+
+    for(auto i: ans){
+        cout<<i<<" ";
+    }
     return 0;
 }
