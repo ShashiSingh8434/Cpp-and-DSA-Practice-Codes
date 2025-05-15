@@ -33,26 +33,23 @@ public:
     }
 };
 
-void levelOrderWithEndl(Node* root) {
-    queue<Node*> q;
-    q.push(root);
-    q.push(NULL);
+int iterate(Node* root, int &leftSum, int &rightSum){
+    if(!root) return 0;
 
-    while (!q.empty()) {
-        Node* curr = q.front(); q.pop();
+    int temp = root->data;
 
-        if(curr == NULL){
-            cout<<endl;
-            if(!q.empty()){
-                q.push(NULL);
-            }
-        }
-        else{
-            cout << curr->data << " ";
-            if (curr->left) q.push(curr->left);
-            if (curr->right) q.push(curr->right);
-        }        
-    }
+    root->data = iterate(root->left, leftSum, rightSum) 
+               + iterate(root->right, leftSum, rightSum);
+                
+    
+    return root->data + temp;
+}
+
+void transform(Node* root){
+    int leftSum = 0;
+    int rightSum = 0;
+    
+    iterate(root, leftSum, rightSum);
 }
 
 int main(){
@@ -73,10 +70,26 @@ int main(){
     b->relationSet(e,f);
     c->relationSet(g,h);
     e->relationSet(i,j);
+/*
 
+         1
+       /   \
+     2      3
+    / \    / \
+   4   5  6   7
+  / \    / \
+ 8   9  10  11
+ 
+*/
     root->levelOrder(root);
-    cout<<endl;
-    levelOrderWithEndl(root);
+
+    cout<<endl<<endl;
+
+    transform(root);
+    root->levelOrder(root);
+
+    cout<<endl<<endl;
+
     
     return 0;
 }
