@@ -76,7 +76,7 @@ Node* makeBST(vector<int> arr){
 
 
 int main(){
-    vector<int> arr = {5,4,8,7,1,6,9,11,7,2,3};
+    vector<int> arr = {5,4,8,7,1,6,9,11,2,3};
     Node* root = makeBST(arr);
 
     levelOrder(root);

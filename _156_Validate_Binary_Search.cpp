@@ -73,14 +73,33 @@ Node* makeBST(vector<int> arr){
     }
     return root;
 }
+/*
 
-Node* findNodeInBST(Node* root, int target){
-    if(!root) return NULL;
+#### One more way to validate BST is to find its inorderTraversal and then check whether it is sorted or not if not then the BST is invalid as simple as that ####
 
-    if(root->data == target) return root;
+*/
 
-    if(root->data > target) return findNodeInBST(root->left, target);
-    if(root->data < target) return findNodeInBST(root->right, target);
+// this method stricty prohibit same data entries so be careful   -----------------------------------
+bool validation(Node* root, long long int lb, long long int ub){  
+    if(!root) return true;
+
+    if(root->data > lb 
+        && root->data < ub       // to allow duplicates entry here change the condition to "&& root->data <= ub" 
+        && validation(root->left, lb, root->data) 
+        && validation(root->right, root->data, ub)){
+
+        return true;
+    }   
+    else{
+        return false;
+    }  
+}
+
+bool validateBST(Node* root){
+    long long int lb = INT64_MIN;        // INT64_MIN is used to initialise min for very very small no. ie -(2 raise to 63)
+    long long int up = INT64_MAX;
+
+    return validation(root, lb, up);
 }
 
 int main(){
@@ -88,8 +107,10 @@ int main(){
     Node* root = makeBST(arr);
 
     levelOrder(root);
-    // inorder(root); // inorder of BST is always sorted *** very very important
+    inorder(root); // inorder of BST is always sorted *** very very important
+
+    cout<<endl;
+    cout<<validateBST(root);     
     
-    cout<<endl<<findNodeInBST(root, 5)->data;
     return 0;
 }

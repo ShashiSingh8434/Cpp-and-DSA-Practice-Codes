@@ -74,22 +74,76 @@ Node* makeBST(vector<int> arr){
     return root;
 }
 
-Node* findNodeInBST(Node* root, int target){
+int maxVal(Node* root){
+    Node* temp = root;
+
+    if(!temp) return -1;
+
+    if(temp){
+        while(temp->right){
+            temp = temp->right;
+        }
+        return temp->data;
+    }
+}
+
+int minVal(Node* root){
+    Node* temp = root;
+
+    if(!temp) return -1;
+
+    if(temp){
+        while(temp->left){
+            temp = temp->left;
+        }
+        return temp->data;
+    }
+}
+
+Node* deleteNode(Node* root, int target){
     if(!root) return NULL;
 
-    if(root->data == target) return root;
-
-    if(root->data > target) return findNodeInBST(root->left, target);
-    if(root->data < target) return findNodeInBST(root->right, target);
+    if(root->data == target){
+        
+        if(!root->left && !root->right){
+            return NULL;
+        }
+        else if(!root->left && root->right){
+            Node* child = root->right;
+            return child;
+        }
+        else if(root->left && !root->right){
+            Node* child = root->left;
+            return child;
+        }
+        else{
+            int inorderPredecessor = maxVal(root->left);
+            root->data = inorderPredecessor;
+            root->left = deleteNode(root->left,inorderPredecessor);
+            return root;
+        }
+    }
+    else if(root->data > target){ 
+        root->left = deleteNode(root->left, target);
+    }
+    else if(root->data < target){ 
+        root->right = deleteNode(root->right, target);
+    }
+    return root;
 }
+
+
 
 int main(){
     vector<int> arr = {5,4,8,7,1,6,9,11,2,3};
     Node* root = makeBST(arr);
 
-    levelOrder(root);
-    // inorder(root); // inorder of BST is always sorted *** very very important
-    
-    cout<<endl<<findNodeInBST(root, 5)->data;
+    vector<int> arr2 = {100,50,150,40,60,110,175};
+    Node* rootnew = makeBST(arr2);
+
+    levelOrder(rootnew);
+    cout<<endl;
+    deleteNode(rootnew, 100);
+    levelOrder(rootnew);
     return 0;
 }

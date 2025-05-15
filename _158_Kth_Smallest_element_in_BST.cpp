@@ -74,22 +74,33 @@ Node* makeBST(vector<int> arr){
     return root;
 }
 
-Node* findNodeInBST(Node* root, int target){
-    if(!root) return NULL;
+Node* iterate(Node* root, int &k){
+    if (!root) return NULL;
 
-    if(root->data == target) return root;
+    Node* leftAns = iterate(root->left, k);
+    if (leftAns) return leftAns;
 
-    if(root->data > target) return findNodeInBST(root->left, target);
-    if(root->data < target) return findNodeInBST(root->right, target);
+    k--;
+    if (k == 0) return root;
+
+    return iterate(root->right, k);
 }
 
+Node* KthSmallestElement(Node* root, int k){
+    return iterate(root, k);
+}
+
+
 int main(){
-    vector<int> arr = {5,4,8,7,1,6,9,11,2,3};
+    vector<int> arr = {5,4,8,7,1,6,9,11,7,2,3};
     Node* root = makeBST(arr);
 
     levelOrder(root);
-    // inorder(root); // inorder of BST is always sorted *** very very important
+    inorder(root); // inorder of BST is always sorted *** very very important
+
+    int k = 4;
+    cout<<endl<<KthSmallestElement(root, k)->data;
+     
     
-    cout<<endl<<findNodeInBST(root, 5)->data;
     return 0;
 }

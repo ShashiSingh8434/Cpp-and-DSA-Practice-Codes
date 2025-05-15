@@ -74,22 +74,25 @@ Node* makeBST(vector<int> arr){
     return root;
 }
 
-Node* findNodeInBST(Node* root, int target){
-    if(!root) return NULL;
+Node* lowestCommonAncestor(Node* root, int p, int q){
+    if(!root) return nullptr;
 
-    if(root->data == target) return root;
-
-    if(root->data > target) return findNodeInBST(root->left, target);
-    if(root->data < target) return findNodeInBST(root->right, target);
+    if(p < root->data && q < root->data) 
+        return lowestCommonAncestor(root->left, p, q);
+    if(p > root->data && q > root->data) 
+        return lowestCommonAncestor(root->right, p, q);
+    
+    return root;
 }
 
 int main(){
-    vector<int> arr = {5,4,8,7,1,6,9,11,2,3};
+    vector<int> arr = {5,4,8,7,1,6,9,11,7,2,3};
     Node* root = makeBST(arr);
 
     levelOrder(root);
-    // inorder(root); // inorder of BST is always sorted *** very very important
+    inorder(root); // inorder of BST is always sorted *** very very important
+
+    cout<<endl<<lowestCommonAncestor(root, 2,9)->data;
     
-    cout<<endl<<findNodeInBST(root, 5)->data;
     return 0;
 }
