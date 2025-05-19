@@ -1,41 +1,34 @@
 #include <iostream>
 using namespace std;
 
-class TrieNode{
-public: 
+class TrieNode {
+public:
     char data;
     TrieNode* children[26];
     bool isTerminal;
+    int childCount;
 
-    TrieNode(char d){
-        this->data = d;
-        for(int i=0; i<26; i++){
+    TrieNode(char d) {
+        data = d;
+        isTerminal = false;
+        childCount = 0;
+        for (int i = 0; i < 26; i++) {
             children[i] = NULL;
-            this->isTerminal = false;
         }
     }
 };
 
-void insertWord(TrieNode* root, string s){
-    cout<<"inserting "<<s<<endl;
-    if(s.length() == 0){
-        root->isTerminal = true;
-        return;
+void insertWord(TrieNode* root, string s) {
+    TrieNode* current = root;
+    for (char c : s) {
+        int index = c - 'a';
+        if (current->children[index] == NULL) {
+            current->children[index] = new TrieNode(c);
+            current->childCount++;
+        }
+        current = current->children[index];
     }
-
-    char c = s[0];
-    int index = c - 'a';
-    TrieNode* child;
-
-    if(root->children[index] != NULL){
-        child = root->children[index];
-    }
-    else{
-        child = new TrieNode(c);
-        root->children[index] = child;
-    }
-
-    insertWord(child, s.substr(1));
+    current->isTerminal = true;
 }
 
 bool searchWord(TrieNode* root, string s){
